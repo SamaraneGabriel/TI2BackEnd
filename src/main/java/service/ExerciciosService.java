@@ -22,13 +22,13 @@ public class ExerciciosService extends ServiceParent{
 	 */
 	public static Object getExercicio(Request req, Response res) throws Exception {
 		String neuro = req.queryParams("neuro");
-		System.out.println(neuro);
 		//Look-up table for values
 		int neuroNum = Integer.parseInt(neuro);
         
         res.type("application/json");
         
         //Get todas as questoes de certa neurodiv
+
         List<Questao> questoes = QuestaoDAO.getQuestoesPorNeurodivergencia(neuroNum);
         JSONArray jsonArray = new JSONArray();
 
@@ -36,7 +36,10 @@ public class ExerciciosService extends ServiceParent{
     	    JSONObject json = new JSONObject();
     	    
     	    List<Alternativa> alternativas = QuestaoDAO.getAlternativas(questoes.get(i).getId());
+            System.out.println("size = "+alternativas.size() + " id =" + questoes.get(i).getId());
+            
     	    int indiceCorreto = QuestaoDAO.getAlternativaCorreta(alternativas);
+    	    if (indiceCorreto < 0) System.err.println("Couldnt find correct alternative");
     	    
     	    json.put("text", questoes.get(i).getEnunciado());
     	    json.put("type", questoes.get(i).getNeuro_div()); 

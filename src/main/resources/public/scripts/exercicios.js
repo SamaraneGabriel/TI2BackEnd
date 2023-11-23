@@ -32,7 +32,7 @@ const incrementDefault = 2.5;
 const isCorrectMod = 5
 
 let queue; //Queue following defaultJsonQueue model
-let queueEnd = 0; 
+let queueLength = 0; 
 let trilhaProgress = 0; //(100) is completed
 let correctAlternative = 0; //in index 0 - 4
 
@@ -81,17 +81,18 @@ async function fetchNewQueue(){
 
     const jsonQueue = await restfulJsonGet(getPaths.exercicios + '?neuro=', getNeuroNum(neuroDiv));
 
-    console.log(JSON.stringify(jsonQueue));
+    console.log(jsonQueue);
+    console.log(jsonQueue[1].alternatives)
 
 
-    queueEnd = 0;
+    queueLength = 0;
     if (jsonQueue != null && jsonQueue.length > 0) queue = jsonQueue;
     else {
         queue = defaultJsonQueue;
         //alert ('Using mock-up data');
     }
 
-    loadExercicio (queue[queueEnd++]);
+    loadExercicio (queue[queueLength++]);
 }
 
 function loadExercicio(json) {
@@ -156,7 +157,8 @@ form.addEventListener('submit', (e) => {
         }
 
         if (trilhaProgress < 100) {
-            if (queueEnd < queue.length) loadExercicio(queue[queueEnd++]);
+            console.log("length = "+queueLength + " " + queue.length)
+            if (queueLength < queue.length) loadExercicio(queue[queueLength++]);
             else fetchNewQueue();
         }
         else {
@@ -176,10 +178,12 @@ const delayBetweenSentences=100;
 textToSpeechButton.addEventListener('click', (e)=>{
     e.preventDefault();
     textToSpeech.setVelocidade(1)
-    textToSpeech.falar(queue[queueEnd].text);
-    console.log(queue[queueEnd].alternatives.length)
-    for (let i = 0; i < queue[queueEnd].alternatives.length; i++){
-        const alternativeContent = queue[queueEnd].alternatives[i].conteudo;
+    console.log(queue)
+    let end = queueLength-1;
+    textToSpeech.falar(queue[end].text);
+    console.log(queue[end].alternatives.length)
+    for (let i = 0; i < queue[end].alternatives.length; i++){
+        const alternativeContent = queue[end].alternatives[i].conteudo;
         console.log(alternativeContent)
         const utterance = new SpeechSynthesisUtterance();
         utterance.text = alternativeContent;
