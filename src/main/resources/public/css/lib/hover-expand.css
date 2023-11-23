@@ -1,0 +1,8 @@
+.expand-on-hover {
+    transition: transform 0.3s; /* Add a smooth transition effect */
+}
+
+.expand-on-hover:hover {
+    transform: scale(1.2); /* Scale the image to 1.2 times its original size on hover */
+
+}

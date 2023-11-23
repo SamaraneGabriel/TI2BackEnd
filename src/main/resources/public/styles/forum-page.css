@@ -1,0 +1,72 @@
+/* Handle interactions and exclusive formatting for when inside the post 
+ * details page. Include chatbox area formatting, like interaction
+ * and the like
+ */
+
+.inline-block{
+    display: inline-block;
+}
+
+.post-user-display{
+    margin: auto;
+    cursor: pointer;
+}
+
+.centered-content {
+    display: flex;
+    align-items: center;
+}
+
+.notliked {
+    color:black;
+}
+.not-liked:hover {
+    color: red;
+    cursor: pointer;
+    font-size: larger;
+}
+
+.liked {
+    color:red;
+}
+.liked:hover {
+    color: gainsboro;
+    cursor: pointer;
+    font-size: larger;
+}
+
+#forum-image{
+    margin-left:6px;
+}
+#post-username{
+    margin-left:8px;
+}
+
+.divider{
+    margin-left:4px;
+    margin-right:4px;
+}
+
+/* Apply CSS styles to the comment box */
+#comment-box {
+    width: 100%;
+    height: 150px; /* Adjust the height as needed */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none; /* Prevent user from resizing the textarea */
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+.comment-container {
+    margin-left: 8px;
+    align-items: center;
+    height: 100%;
+}
+
+
+.block {
+    display: block;
+}
+

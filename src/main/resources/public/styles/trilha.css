@@ -1,0 +1,45 @@
+
+.rounded-circle-container {
+    width: 290px; /* Set the width you want for the container */
+    height: 200px; /* Set the height you want for the container */
+    overflow: hidden; /* Hide any part of the image that exceeds the container size */
+    border-radius: 50%; /* Create a circular container */
+}
+.introducao {
+    text-align: center;
+}
+
+.rounded-circle-container img {
+    width: 100%; /* Make the image fill the container width */
+    height: 100%; /* Make the image fill the container height */
+    object-fit: cover; /* Maintain the aspect ratio and cover the entire container */
+}
+
+.trilhaTitle {
+    font-size: large;
+}
+
+.completed {
+    position: relative;
+    border: 5px solid red; 
+    border-radius: 50%; /* Make it a circle */
+    overflow: hidden;
+}
+
+.row {
+    justify-content: center; /* Center align the columns horizontally */
+   
+}
+
+.grey-out {
+    filter: grayscale(80%); /* Apply a grayscale filter to make the image appear greyed out */
+}
+
+.row p {
+    text-align: center;
+}
+
+card-trilha {
+    margin-top: 5%;
+    width: 15rem;
+}

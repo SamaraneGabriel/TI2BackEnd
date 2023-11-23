@@ -1,0 +1,74 @@
+<!doctype html>
+<!--STANDART FORMATS FOR ALMOST ALL DOCUMENTS - HEADER, SCRIPT AND STYLESHEETS-->
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trilha</title>
+
+    <!--includes external libraries-->
+    <script src="/js/common-head.js"></script>
+        
+    <!--renders header and footer-->
+    <script type="module" src="/js/webapp-initial-render.js"></script>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header2.css">
+    <link rel="stylesheet" href="/css/lib/hover-expand.css">
+    <link rel="stylesheet" href="/css/lib/return-arrow.css">
+
+    <link rel="stylesheet" href="/styles/trilha-modal.css">
+    <link rel="stylesheet" href="/styles/trilha.css">
+
+
+    <!--JS-->
+    <!--not properly addapted to new module organization -> might be discarted in favor of other design-->
+    <script type="module" src="/scripts/trilhas.js"></script>
+</head>
+
+<body>
+    <!--Values change according to option clicked by user-->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-modal">&times;</span>
+            <img id="modal-image" alt="avatar1" />
+
+            <div class="mt-5"></div>
+            <h2 id="modal-title"></h2>
+
+            <div class="mt-5"></div>
+            <p id="modal-description"></p>
+
+            <div class="mt-5"></div>
+            <a id="modal-link" href="/outras/exercicios.html"> 
+                <button type="button" id="modal-button" class="btn btn-large btn-success">Começar</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-5"></div>
+    <div class="mt-5"></div>
+    
+    <div class = "introducao">
+		<h1>Esta é a sua seção de estudos!</h1>
+		<p>Aqui você pode escolher entre qualquer uma das trilhas de exercício para fazer!</p>
+	</div>
+
+    <main class="mt-5 container" id="trilha-container">
+        <div class="row justify-content-center mt-3">
+            <div class="Placeholder-Trilha col"></div>
+            <div class="Placeholder-Trilha col"></div>
+            <div class="Placeholder-Trilha col"></div>
+        </div>
+    </main>
+
+    <!--creating distance from footer-->
+    <div class="mb-5"></div>
+    <div class="mb-5"></div>
+</body>
+
+</html>

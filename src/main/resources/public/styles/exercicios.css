@@ -1,0 +1,54 @@
+.parent-container {
+ 
+}
+
+
+.circular-container {
+    border-radius:20px;
+    height: 70vh;
+}
+
+#enviar-button {
+    position: absolute;
+    bottom:2%;
+    right:2%;
+
+    padding: 50px; /*gives the size*/
+
+} 
+#modal-button{
+    position: absolute;
+    bottom:2%;
+    right:2%;
+
+    padding: 12px; /*gives the size*/
+
+    width: 125px;
+
+}
+
+#question-form-alternative{
+    
+}
+
+.question-form-text{
+    font-size: larger;
+}
+.progress-bar-container{
+    padding: 0% !important; /*ensures bootstrap wont stop the bar from filling the container up*/
+    border-radius: 20px;
+    position: relative; /*for absolute progress-bar position inside container*/
+}
+#progress-bar{
+    position: absolute;
+    bottom: 0;
+    height: 0%;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #0077cc; /* Example background color */
+    transition: height 0.2s; /* Add a smooth transition effect */
+}
+
+#question-form-alternative{
+    font-size: larger;
+}

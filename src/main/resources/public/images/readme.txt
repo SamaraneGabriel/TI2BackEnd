@@ -1,0 +1,1 @@
+images inside subfolders to avoid immense cluttering once the website scales

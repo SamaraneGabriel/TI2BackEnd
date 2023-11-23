@@ -1,0 +1,25 @@
+.offcanvas-body li{
+    text-align: center;
+}
+
+.offcanvas-title h5{
+    text-align: center;
+}
+
+.offcanvas-body .list-group-item {
+    text-decoration: none; /* Remove sublinhado */
+}
+
+.offcanvas-body .list-group-item:hover {
+    background-color: #f0f0f0; /* Alterar a cor de fundo ao passar o mouse */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, box-shadow 0.3s; 
+}
+
+
+/* Estiliza as <li> quando o mouse passa por cima do link */
+.navbar-nav .nav-item:hover {
+    background-color: beige; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, box-shadow 0.3s; 
+}

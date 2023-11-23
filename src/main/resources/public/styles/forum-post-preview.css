@@ -1,0 +1,23 @@
+.like-comment div{
+    background-color: #eaedef;
+    margin-right:14px;
+}
+.like-comment div:hover{
+    background-color: #e1e3e3;
+}
+.like-comment {
+    margin-left:4px;
+}
+
+.post-row{
+    font-size:larger;
+}
+
+.post {
+    cursor: pointer;
+}
+
+.post:hover {
+    background-color: #f0f1f1
+    
+}

@@ -1,0 +1,30 @@
+/*this css is applied to every page*/
+
+body{
+    background: linear-gradient(90deg,  #71dd71, #587a68);	
+}
+
+.label-with-spacing {
+    margin-left: 10px; /* spacing for email and senha forms */
+}
+
+/*Solution to ensure the footer is always the bottom of page*/
+/*---------------------------------*/
+.container {
+    flex-grow: 1;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: beige !important;
+    min-height: 100vh; /* 100% of the viewport height */
+}
+/*---------------------------------*/
+
+@media (max-width: 767px) {
+    body{
+        margin: 0!important;
+        padding: 3%;
+    }
+}

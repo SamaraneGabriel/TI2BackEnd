@@ -1,0 +1,24 @@
+/*RETURN ARROW ON SECTION PAGES*/
+/*
+<div class="return-arrow">
+    <a href="/outras/telainicial.html"><i class="fas fa-arrow-left"></i></a>
+</div>*/
+.return-arrow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    /* Add some margin to give space from the edges */
+    z-index: 999;
+    /* Set a high z-index to ensure it's above other elements */
+}
+
+/* Additional styles for the icon */
+.return-arrow {
+    font-size: 24px;
+    /* Adjust the font size as needed */
+}
+
+.container {
+    position:relative;
+}

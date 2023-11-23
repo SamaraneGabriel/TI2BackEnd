@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta   name="viewport" content="width=device-width, initial-scale=1">
+    <title>Cadastro</title>
+
+    <!--includes external libraries-->
+    <script src="/js/common-head.js"></script>
+
+
+
+    <!--CSS-->
+    <link rel="stylesheet" href="/css/style.css">
+
+
+    <!--CSS-->
+    <link rel="stylesheet" href="/styles/cadastro.css">
+    <script src="/scripts/cadastro.js" defer></script>
+
+</head>
+
+
+<body>
+
+    <header class="site-header">
+        <h1>NeuroNerds</h1>
+    </header>
+
+    <div class="container">
+        <div class="screen">
+            <div class="screen__content">
+                <form class="cadastro" id="cadastro-form">
+                    <div class ="cadastro_text">
+                        <h1>Cadastre-se!</h1>
+                    </div>
+                    <div class="cadastro__field">
+                        <i class="cadastro__icon fas fa-user"></i>
+                        <input type="text" class="cadastro__input" placeholder="Username" id="name">
+                    </div>
+                    <div class="cadastro__field">
+                        <i class="cadastro__icon fas fa-chevron-right"></i>
+                        <input type="email" class="cadastro__input" placeholder="Email" id = "email">
+                    </div>
+                    <div class="cadastro__field">
+                        <i class="cadastro__icon fas fa-lock"></i>
+                        <input type="password" class="cadastro__input" placeholder="Password" id = "password">
+                    </div>
+                    <button class="button cadastro__submit" type="submit">
+                        <span class="button__text">Cadastrar</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </button>
+                    <a href="../index.html" class="button cadastro__submit">
+                        <span class="button__text">Voltar para o Login</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </a>	
+							
+                </form>
+            </div>
+	
+        </div>
+    </div>
+
+</body>
+
+</html>

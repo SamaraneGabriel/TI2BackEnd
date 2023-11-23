@@ -1,0 +1,104 @@
+<!doctype html>
+<!--STANDART FORMATS FOR ALMOST ALL DOCUMENTS - HEADER, SCRIPT AND STYLESHEETS-->
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trilha</title>
+
+    <!--includes external libraries-->
+    <script src="/js/common-head.js"></script>
+
+    <!--renders header and footer-->
+    <script type="module" src="/js/webapp-initial-render.js"></script>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/header2.css">
+    <link rel="stylesheet" href="/css/lib/hover-expand.css">
+    <link rel="stylesheet" href="/css/lib/return-arrow.css">
+
+    <link rel="stylesheet" href="/styles/exercicios.css">
+
+
+    <!--JS-->
+    <script type="module" src="/scripts/exercicios.js" defer></script>  
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="row">
+            <!--section to the right that contains posts-->
+            <div class="container circular-container bg-light mt-4 col-10 pb-3 d-flex flex-column">
+                <div class="container">
+                    <form id="question-form">
+                        <div class="pt-3 padding-divider"></div>
+
+                        <h1 id="question-form-header"></h1> <!--Abandoned title-->
+                        <div class="mt-5 margin-divider"></div>
+
+                        <p class="question-form-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
+                            veniam voluptatum aperiam minus
+                            ex
+                            eligendi, nesciunt expedita sed sint maxime reiciendis, ipsam voluptatibus ipsa ratione
+                            autem
+                            nobis
+                            atque quidem magni iste labore. Ad architecto atque voluptates doloribus consequuntur fuga
+                            libero?
+                        </p>
+
+                        <div id="question-form-alternative" class="mt-5">
+
+                            <label class="alternative-label">
+                                <input type="radio" name="answer" value="1">
+                                <span class="alternative-label-text">Alternative 1</span>
+                            </label>
+                            <br>
+                            <label class="alternative-label">
+                                <input type="radio" name="answer" value="2">
+                                <span class="alternative-label-text">Alternative 2</span>
+                            </label>
+                            <br>
+                            <label class="alternative-label">
+                                <input type="radio" name="answer" value="3">
+                                <span class="alternative-label-text">Alternative 3</span>
+                            </label>
+                            <br>
+                            <label class="alternative-label">
+                                <input type="radio" name="answer" value="4">
+                                <span class="alternative-label-text">Alternative 4</span>
+                            </label>
+                            <br>
+                            <label class="alternative-label">
+                                <input type="radio" name="answer" value="5">
+                                <span class="alternative-label-text">Alternative 5</span>
+
+                            </label>
+
+                        </div>
+                        <div class="mt-5"></div>
+                        <p><i>debug - correct value: </i><span id="alternative-debug-correct"></span></p>
+                
+                        
+                        <button type="submit" id="modal-button" class="btn btn-large btn-success">Enviar</button>
+
+
+                    </form>
+                    <button type="submit" id="text-to-speech-button" class="btn btn-large btn-success">FALAR</button>
+                </div>
+
+            </div>
+            <div class="col-1 col-divider"></div>
+            <div class="progress-bar-container bg-light mt-4 col-1">
+                <div class="bg-success" id="progress-bar"></div>
+            </div>
+        </div>
+
+
+</body>
+
+</html>

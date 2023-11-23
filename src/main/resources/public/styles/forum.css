@@ -1,0 +1,72 @@
+/* Contains the general format for the forum pages
+ * This includes tab formatting, circular container, arrengement of'
+ * title, username, user imager, text, likes, comments, and so on
+ */
+
+.tag {
+    display: inline-block;
+    padding: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left:4px;
+    color:white;
+}
+
+#content-section{
+    margin-right: 20px;
+}
+
+
+.post-user-display img{
+    height: 50px;
+    width: 50px;
+    
+}
+
+.header-community{
+    margin-left:14px;
+}
+
+.circular-container {
+    border-radius:20px;
+}
+#sidebar-section {
+    overflow: hidden;
+}
+#sidebar-section p {
+    margin-left:14px;
+}
+
+.banner-image {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    padding: 0; /* Remove any padding */
+    margin: 0; /* Remove any margin */
+}
+
+.banner-image img {
+    object-fit: cover;
+    width: 100%;
+    padding: 0; /* Remove any padding */
+    margin: 0; /* Remove any margin */
+}
+
+.online-count {
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar-spacing {
+    margin-left:24px;
+}
+.online-count-num{
+    font-size: larger;
+}
+.online-count-text{
+    font-size: small;
+}
+.fa-circle {
+    font-size: smaller;
+    color: #55bd46;
+}

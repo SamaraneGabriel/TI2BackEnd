@@ -1,0 +1,25 @@
+/*THIS CSS CAN ONLY AFFECT FOOTERS - CHANGES NEEDED TO .CONTAINER OR SO ON ARE TO BE SENT TO STYLE*/
+
+.site-footer {
+    background-color: rgba(255, 255, 255, 0.712); /* Cor de fundo */
+    color: #333; /* Cor do texto */
+    text-align: center; /* Alinha o texto ao centro */
+    padding: 10px 0; /* Espaçamento superior e inferior */
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1); /* Sombra para um efeito elevado */
+    font-size: 14px; /* Tamanho do texto */
+}
+
+.site-footer a {
+    color: #007bff; /* Cor do link */
+    text-decoration: none; /* Remove o sublinhado do link */
+}
+
+.site-footer a:hover {
+    text-decoration: underline; /* Adiciona sublinhado ao passar o mouse */
+}
+
+.footer-content {
+    max-width: 1200px; /* Largura máxima do conteúdo */
+    margin: auto; /* Centraliza o conteúdo */
+    padding: 0 20px; /* Espaçamento lateral */
+}
