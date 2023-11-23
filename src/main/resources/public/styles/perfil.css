@@ -1,89 +1,40 @@
-.rounded-circle-container {
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-    /* Hide any part of the image that exceeds the container size */
-    border-radius: 50%;
-    /* Create a circular container */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    padding: 20px;
 }
 
-.rounded-circle-container img {
+.main-container {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-    /* Make the image fill the container width */
-    height: 100%;
-    /* Make the image fill the container height */
-    object-fit: cover;
-    /* Maintain the aspect ratio and cover the entire container */
+    max-width: 1200px; /* Ajuste a largura máxima conforme necessário */
+    margin: auto;
 }
 
-img {
-    max-width: 200px;
-    max-height: 200px;
-}
-
-/*general containers (box for the whole container and field for the spaced one inside*/
-.profileField {
-    padding: 75px;
-
-}
-
-.main-view {
-    background-color: #FAFAFA;
-}
-
-.fa-fire {
-    color: red;
-}
-
-.streak {
-    text-align: end;
-    font-size: larger;
-    padding-right: 4%;
-}
-
-/*profile dets*/
-.profilePicture {
-    margin-left: 10%;
-}
-
-.small-header {
-    font-size: larger;
-}
-
-.sidebar {
-    margin-left: 20px;
-}
-
-.profileDetailsSection {
+.profile-container,
+.performance-container {
     background-color: white;
+    padding: 20px;
+    width: 48%; /* Slightly less than half to fit side by side */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
 }
 
-/*Sidebar page interaction*/
-
-.pageOff {
-    color: #999;
-    cursor: pointer;
-    /* Change cursor to pointer on hover (optional) */
-}
-
-.pageOff:hover {
-    color: grey;
-    /* Change color on hover (optional) */
-}
-
-.profileDetails button {
-    background-color: #4CAF50; /* Cor verde */
+button {
+    background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
-    margin: 10px 0;
+    padding: 10px 15px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    margin-top: 10px;
+    display: block; /* Makes the buttons block level elements */
+    width: 100%; /* Full width */
 }
 
-.profileDetails button:hover {
-    background-color: #45a049; /* Cor verde um pouco mais escura ao passar o mouse */
+button:hover {
+    background-color: #45a049;
 }
-
-

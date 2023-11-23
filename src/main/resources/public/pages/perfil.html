@@ -20,13 +20,26 @@
 	<link rel="stylesheet" href="/css/header2.css">
 	<link rel="stylesheet" href="/css/lib/return-arrow.css">
 	<link rel="stylesheet" href="/styles/perfil.css">
-
-	<!--JS-->
-	<script type="module" src="/scripts/perfil.js" defer></script> 
-</head>
+	 <script type="module" src="../scripts/perfil.js"></script>
 
 
 <body>
-	<!--Element built inside of main container-->
-	<div id="main" class="container"></div>
+    <main class="main-container">
+        <div class="profile-container">
+            <h1>Perfil do Usuário</h1>
+            <p>Username: <span id="username-display"></span></p>
+            <p>Email: <span id="email-display"></span></p>
+            <button id="change-username-btn">Alterar Username</button>
+            <button id="change-email-btn">Alterar Email</button>
+            <button id="change-password-btn">Alterar Senha</button>
+        </div>
+
+        <div class="performance-container">
+            <h1>Desempenho</h1>
+            <p>Total de Exercícios Respondidos: <span id="total-exercicios"></span></p>
+            <p>Total de Exercícios Acertados: <span id="total-acertos"></span></p>
+            <p>Porcentagem de Acertos: <span id="porcentagem-acertos"></span></p>
+        </div>
+    </main>
 </body>
+</html>

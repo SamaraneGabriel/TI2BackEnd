@@ -114,7 +114,8 @@ public class AuthService extends ServiceParent{
 	        
 	        json.put("username", usuario.getUsername());
 	        json.put("email", usuario.getEmail());
-	        
+	        json.put("acertos", usuario.getQtdAcertos());
+	        json.put("feitos", usuario.getQtdFeitos());
 	        res.type("application/json");
 	        return json.toJSONString();
 	    } else {

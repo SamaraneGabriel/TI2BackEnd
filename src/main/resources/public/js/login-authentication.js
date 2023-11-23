@@ -34,13 +34,6 @@ if (form || usernameElement || passwordElement == null) {
 form.addEventListener('submit', (e) => {
     e.preventDefault(); // Prevent default form submission
     
-    //This is ok for now, but changing the form to something else when
-    //there is a token might be a better alternative
-    if (isLoggedIn()){
-        alert("login through logged in acc")
-        window.location.href = nextPageHtml;
-        return;
-    } else console.log('attempted login')
 
     const usernameInput = usernameElement.value;
     const passwordInput = passwordElement.value;
@@ -93,11 +86,7 @@ function sendAuth(usernameInput, passwordInput) {
             window.location.href = nextPageHtml;
         })
         .catch(error => {
-            console.error('loginAuth.js error: ', error + '\n' + 'using test user values for now');
-            alert('couldnt reach server. Using test user');
-            storeDefaultToken();
-            storeDefaultUserData();
-            window.location.href = nextPageHtml;
+			console.log(error);
         })
 }
 
