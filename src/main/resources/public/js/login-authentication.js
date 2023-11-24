@@ -51,6 +51,9 @@ function sendAuth(usernameInput, passwordInput) {
         email: usernameInput,
         password: passwordInput
     };
+    
+    console.log(serverRequestData.email);
+    console.log(serverRequestData.password);
 
     fetch('/auth', {
         method: "POST",

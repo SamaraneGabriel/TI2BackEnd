@@ -56,7 +56,8 @@ public class AuthService extends ServiceParent{
 	    String reqJsonBody = req.body();
 	    JSONObject reqJson = parseBody(reqJsonBody);
 
-	    String email = (String) reqJson.get("username");
+	    String email = (String) reqJson.get("email");
+	    System.out.println(email);
 	    String password = (String) reqJson.get("password");
 
 	    res.type("application/json");
