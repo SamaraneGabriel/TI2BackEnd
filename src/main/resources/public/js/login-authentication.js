@@ -23,28 +23,15 @@ import htmlPages from "../modules/htmlPaths.js"
 
 const nextPageHtml = htmlPages.homepage;
 const form = document.getElementById('loginForm');
-const usernameElement = document.getElementById('email');
-const passwordElement = document.getElementById('password');
-
-if (form || usernameElement || passwordElement == null) {
-    console.error("One of the static essential components missing!")
-}
-
 
 form.addEventListener('submit', (e) => {
     e.preventDefault(); // Prevent default form submission
     
-    //This is ok for now, but changing the form to something else when
-    //there is a token might be a better alternative
-    if (isLoggedIn()){
-        alert("login through logged in acc")
-        window.location.href = nextPageHtml;
-        return;
-    } else console.log('attempted login')
 
-    const usernameInput = usernameElement.value;
-    const passwordInput = passwordElement.value;
+    const usernameInput =  document.getElementById('email').value;
+    const passwordInput = document.getElementById('password').value;
     if (usernameInput.trim() !== '' || passwordInput.trim() !== ''){
+		console.log("senha = " + passwordInput + "email = " + usernameInput);
         sendAuth(usernameInput, passwordInput);
     } 
 })
@@ -65,44 +52,41 @@ function sendAuth(usernameInput, passwordInput) {
         password: passwordInput
     };
 
-    console.log("data sent to server:" + JSON.stringify(serverRequestData));
-
     fetch('/auth', {
         method: "POST",
         body: JSON.stringify(serverRequestData),
-        headers: {
-            //specify its a json being sent
-            "Content-Type": "application/json"
+        headers: { "Content-Type": "application/json" }
+    })
+    .then(response => {
+        if (response.status === 401) { //expected unauthorized response
+            throw new Error ("Unauthorized");
+
+        } else if (!response.ok) { //unexpected error responses, incluiding couldnt reach server
+            throw new Error('API request failed with status ' + response.status);
+        }
+        return response.json();
+    })
+    .then(json => {
+        console.log ('Token: ' + JSON.stringify(json, null, 2));
+        if (json) {
+            console.log('Autenticação bem-sucedida: ' + JSON.stringify(json));
+            storeNewUserData(json.userName, json.userId);
+            storeNewToken(json)
+            window.location.href = nextPageHtml;
         }
     })
-        .then(response => {
-            if (response.status == 401) { //expected unauthorized response
-                throw new Error ("Unauthorized");
-
-            } else if (!response.ok) { //unexpected error responses, incluiding couldnt reach server
-                throw new Error('API request failed with status ' + response.status);
-            }
-            return response.json();
-        })
-        .then(json => {
-			console.log ('Token: ' + JSON.stringify(json, null, 2));
-            storeNewToken(json)
-            
-            //the token was supposed to be encrypted and thus this is not the ideal code
-            storeNewUserData(json.payload.name, json.payload.sub);
+    .catch(error => {
+        console.error(error);
+        if (error.message === 'Unauthorized'){
+            alert('Incorrect user or password');
+        } else {
+            alert('couldnt reach server. Using test user');
+            storeDefaultToken();
+            storeDefaultUserData();
             window.location.href = nextPageHtml;
-        })
-        .catch(error => {
-            console.error(error);
-            if (error.message === 'Unauthorized'){
-                alert('Incorrect user or password');
-            } else {
-                alert('couldnt reach server. Using test user');
-                storeDefaultToken();
-                storeDefaultUserData();
-                window.location.href = nextPageHtml;
-            }
-        })
+        }
+    })
 }
+
 
 

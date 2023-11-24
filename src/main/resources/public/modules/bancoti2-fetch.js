@@ -68,6 +68,30 @@ export async function restfulJsonPost (path, reqJson) {
     })
 }
 
+export async function restfulJsonPut(path, reqJson) {
+    try {
+        const response = await fetch(path, {
+            method: 'PUT',
+            body: JSON.stringify(reqJson),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        if (!response.ok) {
+            console.error('API falhou com status ' + response.status);
+            return false;
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Erro na requisição PUT:', error);
+        return false;
+    }
+}
+
+
+
 // Paths that are used implemented on this method
 export const getPaths = {
     forumExplore: '/forum/explore', 

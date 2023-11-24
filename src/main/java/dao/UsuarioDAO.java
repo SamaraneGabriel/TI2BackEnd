@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Usuario;
+import app.Criptografia;
+
 
 public class UsuarioDAO extends DAO{
 	public static final String cId = "id"; //uk
@@ -104,38 +106,10 @@ public class UsuarioDAO extends DAO{
     	return usuario;
     }
     
-
-    
-    /*
-     * Methods for updating the user data
-     * Returns false if operation failed
-     * 
-     * May present Unique Key -< Foreign key problems!!
-     */
-    
-    public static boolean updateUser(Usuario usuario, String id) {
-    	String sql = "UPDATE bancoti2.usuario" 
-    			+ " SET nome = ?, username = ?,  email = ?,  senha =  ?"
-    			+ " WHERE id = ?";
-    	
-    	try (PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-    		pstmt.setString(1, usuario.getNome());
-    		pstmt.setString(2, usuario.getUsername());
-    		pstmt.setString(3, usuario.getEmail());
-    		pstmt.setString(4, usuario.getSenha());
-    		pstmt.executeUpdate();
-    		
-    	} catch (SQLException e) {
-    		e.printStackTrace();
-    		return false;
-    	}
-    	
-    	return true;
-    }
-    
-    public static boolean updateCol(String sql, String value) {
+    public static boolean updateCol(String sql, String value, int id) {
     	try (PreparedStatement pstmt = conexao.prepareStatement(sql)) {
     		pstmt.setString(1, value);
+    		pstmt.setInt(2, id);
     		pstmt.executeUpdate();
     		
     	} catch (SQLException e) {
@@ -146,20 +120,20 @@ public class UsuarioDAO extends DAO{
     	return true;
     }
     
-    public static boolean updateNome(String nome) {
-    	return updateCol("UPDATE bancoti2.usuario SET nome = ? WHERE id = ?", nome);
+    public static boolean updateNome(String nome, int id) {
+    	return updateCol("UPDATE bancoti2.usuario SET  = ? WHERE id = ?", nome, id);
     }
     
-    public static boolean updateUsername(String username) {
-    	return updateCol("UPDATE bancoti2.usuario SET username = ? WHERE id = ?", username);
+    public static boolean updateUsername(String username, int id) {
+    	return updateCol("UPDATE bancoti2.usuario SET username = ? WHERE id = ?", username, id);
     }
     
-    public static boolean updateEmail(String email) {
-    	return updateCol("UPDATE bancoti2.usuario SET email = ? WHERE id = ?", email);
+    public static boolean updateEmail(String email, int id) {
+    	return updateCol("UPDATE bancoti2.usuario SET email = ? WHERE id = ?", email, id);
     }
     
-    public static boolean updateSenha(String senha) {
-    	return updateCol("UPDATE bancoti2.usuario SET senha = ? WHERE id = ?", senha);
+    public static boolean updateSenha(String senha, int id) {
+    	return updateCol("UPDATE bancoti2.usuario SET senha = ? WHERE id = ?", Criptografia.hashMD5(senha), id);
     }
     
 
@@ -174,8 +148,6 @@ public class UsuarioDAO extends DAO{
     	     pstmt.setString(1, usuario.getNome());
              pstmt.setString(2, usuario.getUsername());
              pstmt.setString(3, usuario.getEmail());
-             pstmt.setString(4, usuario.getSenha());
-             pstmt.setInt(5, 0);
              pstmt.setInt(6, 0);
              pstmt.executeUpdate();
 
@@ -214,27 +186,30 @@ public class UsuarioDAO extends DAO{
     /* Authenticates via email and password
      * Returns true if authentication is a success
      */
-    public static boolean autenticaUsuario(String email, String senha) {    
-        boolean status = false;
-        // Use o nome completo da tabela, incluindo o esquema
-        String sql = "SELECT username FROM bancoti2.usuario WHERE email = ? AND senha = ?";
-        logPStatement(sql);
-        try (PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setString(1, email);
-            pstmt.setString(2, senha);
-            
-            ResultSet resultSet = pstmt.executeQuery();
-            // Se resultSet tem pelo menos uma linha, o usuário foi autenticado
-            if (resultSet.next()) {
-                status = true;
-                log("Usuario esta cadastrado");    
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return status;
-    }
- 
+	    public static boolean autenticaUsuario(String email, String senha) {    
+	        boolean status = false;
+	        // Use o nome completo da tabela, incluindo o esquema
+	        String sql = "SELECT username FROM bancoti2.usuario WHERE email = ? AND senha = ?";
+	        logPStatement(sql);
+	        try (PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+	            pstmt.setString(1, email);
+	            pstmt.setString(2, senha);
+	            
+	            System.out.println("USUARIO TENTOU LOGAR COM EMAIL: " + email + "E SENHA: " + senha);
+	            
+	            ResultSet resultSet = pstmt.executeQuery();
+	            // Se resultSet tem pelo menos uma linha, o usuário foi autenticado
+	            if (resultSet.next()) {
+	                log("Usuario esta cadastrado");    
+	            }
+	            status = true;
+	        } catch (SQLException e) {
+	            throw new RuntimeException(e);
+	        }
+	        System.out.println(status);
+	        return status;
+	    }
+	 
     
     
     /* Get list of Usuario amidst two id values

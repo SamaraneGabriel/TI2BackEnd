@@ -8,9 +8,9 @@ const desflexiaExLink = htmlPages.exercicios;
 const outraExLink = htmlPages.exercicios;
 
 //img src for each card
-const adhdImg = '/images/profile/tdah.png'
-const desflexiaImg = '/images/profile/discalculia.jpeg'
-const outraImg = '/images/profile/dislexia.png'
+const adhdImg = '/images/logo/tdah.jpeg'
+const desflexiaImg = '/images/logo/discalculia.jpeg'
+const outraImg = '/images/logo/dislexia.jpeg'
 
 const cardsData = 
 [

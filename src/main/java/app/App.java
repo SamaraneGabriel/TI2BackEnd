@@ -89,6 +89,18 @@ public class App extends dao.DAO{
 	        Spark.post("/cadastro-user", (req, res) -> {
 	        	return AuthService.cadastraUsuario(req, res);
 	        });
+	        
+	        Spark.put("/update-username", (req, res) -> {
+	        	return AuthService.updateNome(req, res);
+	        });
+	        Spark.put("/update-email", (req, res) -> {
+	        	return AuthService.updateEmail(req, res);
+	        });
+	        Spark.put("/update-senha", (req, res) -> {
+	        	return AuthService.updateSenha(req, res);
+	        });
+	        
+	        
 	        sc.close();
 	
 	}
