@@ -91,6 +91,7 @@ public class App extends dao.DAO{
 	        });
 	        
 	        Spark.put("/update-username", (req, res) -> {
+	        	System.out.println("chamou");
 	        	return AuthService.updateNome(req, res);
 	        });
 	        Spark.put("/update-email", (req, res) -> {

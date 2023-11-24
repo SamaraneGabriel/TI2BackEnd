@@ -94,9 +94,6 @@ async function fetchNewQueue(){
 
 function loadExercicio(json) {
     console.log("loadExercicio - Recebido JSON:", json);
-    textToSpeech.apresentar();
-   
-
     if (json.alternatives.length != 5) {
         console.warn("loadExercicio - Comprimento inesperado de alternativas:", json.alternatives.length);
     }
@@ -186,6 +183,7 @@ textToSpeechButton.addEventListener('click', (e)=>{
         console.log(alternativeContent)
         const utterance = new SpeechSynthesisUtterance();
         utterance.text = alternativeContent;
+        utterance.lang = 'pt-BR';
         textToSpeech.falarUtterance(utterance);
     }
 })

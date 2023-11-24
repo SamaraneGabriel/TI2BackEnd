@@ -114,7 +114,7 @@ public class AuthService extends ServiceParent{
 	        
 	        System.out.println("id: " + id);
 	        System.out.println("Nome: " + username);
-	        if(UsuarioDAO.updateUsername(username, Integer.parseInt(id))) {
+	        if(UsuarioDAO.updateNome(username, Integer.parseInt(id))) {
 	        	status = true;
 	        }
 		} catch (Exception e) {

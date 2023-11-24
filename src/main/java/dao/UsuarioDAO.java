@@ -121,7 +121,7 @@ public class UsuarioDAO extends DAO{
     }
     
     public static boolean updateNome(String nome, int id) {
-    	return updateCol("UPDATE bancoti2.usuario SET  = ? WHERE id = ?", nome, id);
+    	return updateCol("UPDATE bancoti2.usuario SET nome = ? WHERE id = ?", nome, id);
     }
     
     public static boolean updateUsername(String username, int id) {
