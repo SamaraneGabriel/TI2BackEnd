@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
     newHeader.innerHTML = generateAppHeader();
     const exitButton = newHeader.querySelector('.exit-button');  
     exitButton.addEventListener('click', () => {
-        alert('test')
         clearUserData();
         clearUserToken();
         window.location = htmlPages.index;

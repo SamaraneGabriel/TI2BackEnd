@@ -31,7 +31,7 @@ form.addEventListener('submit', (e) => {
     const usernameInput =  document.getElementById('email').value;
     const passwordInput = document.getElementById('password').value;
     if (usernameInput.trim() !== '' || passwordInput.trim() !== ''){
-		console.log("senha = " + passwordInput + "email = " + usernameInput);
+		console.log("senha = " + passwordInput + "email = " + usernameInput); 	
         sendAuth(usernameInput, passwordInput);
     } 
 })

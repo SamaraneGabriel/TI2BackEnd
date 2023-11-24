@@ -14,9 +14,6 @@ const defaultQuestionJson = {
         },
         {
             conteudo: 'Texto da alternativa 4'
-        },
-        {
-            conteudo: 'Texto da alternativa 5'
         }
     ],
     correct: 0 // Índice da alternativa correta, começando de 0
@@ -97,6 +94,8 @@ async function fetchNewQueue(){
 
 function loadExercicio(json) {
     console.log("loadExercicio - Recebido JSON:", json);
+    textToSpeech.apresentar();
+   
 
     if (json.alternatives.length != 5) {
         console.warn("loadExercicio - Comprimento inesperado de alternativas:", json.alternatives.length);
@@ -180,8 +179,8 @@ textToSpeechButton.addEventListener('click', (e)=>{
     textToSpeech.setVelocidade(1)
     console.log(queue)
     let end = queueLength-1;
+    console.log(queue[end].text);
     textToSpeech.falar(queue[end].text);
-    console.log(queue[end].alternatives.length)
     for (let i = 0; i < queue[end].alternatives.length; i++){
         const alternativeContent = queue[end].alternatives[i].conteudo;
         console.log(alternativeContent)

@@ -148,6 +148,8 @@ public class UsuarioDAO extends DAO{
     	     pstmt.setString(1, usuario.getNome());
              pstmt.setString(2, usuario.getUsername());
              pstmt.setString(3, usuario.getEmail());
+             pstmt.setString(4, Criptografia.hashMD5(usuario.getSenha()));
+             pstmt.setInt(5, 0);
              pstmt.setInt(6, 0);
              pstmt.executeUpdate();
 
@@ -201,8 +203,8 @@ public class UsuarioDAO extends DAO{
 	            // Se resultSet tem pelo menos uma linha, o usuário foi autenticado
 	            if (resultSet.next()) {
 	                log("Usuario esta cadastrado");    
+	                status = true;
 	            }
-	            status = true;
 	        } catch (SQLException e) {
 	            throw new RuntimeException(e);
 	        }

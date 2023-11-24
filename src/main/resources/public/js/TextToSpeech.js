@@ -1,4 +1,4 @@
-class TextToSpeech {
+	class TextToSpeech {
     constructor() {
         this.synthesis = window.speechSynthesis;
         this.speechUtterance = new SpeechSynthesisUtterance();
@@ -38,7 +38,7 @@ class TextToSpeech {
 
     //Faz uma breve apresentação de si
     apresentar(){
-        apresentacao = "Olá, me chamo Carlão, o seu ajudante durante esta jornada NeuroNerd, eu sou capaz de ler para você os textos que não puder. Conte comigo.";
+        let apresentacao = "Olá, me chamo Carlota, a sua ajudante durante esta jornada NeuroNerd, eu sou capaz de ler para você os textos que não puder. Conte comigo.";
         this.falar(apresentacao);
     
     }

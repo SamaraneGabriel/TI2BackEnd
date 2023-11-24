@@ -20,6 +20,14 @@ public class Usuario {
         this.username = username;
     }
     
+    public Usuario(String email, String username, String senha) {
+    	this.id = -1;
+    	this.nome = nome;
+        this.senha = senha;
+        this.email = email;
+        this.username = username;
+    }
+    
     // Used to extract the model -> id cannot be set and can only be get from db
     public Usuario(int id, String nome, String email, String username, String senha, int qtdAcertos, int qtdFeitos ) {
         this.id = id;
