@@ -35,12 +35,12 @@ export async function restfulJsonGet(path, id) {
     }
 }
 
-export function doubleRestfulJsonGet (path, id1, id2) {
+export async function doubleRestfulJsonGet (path, id1, id2) {
     if (id1 != null || id2 != null) {
         console.error('Expected 2 params for doubleRestfulJsonGet');
     }
     path = path + '/' + id1 + '/' + id2;
-    return restfulJsonGet(path);
+    return await restfulJsonGet(path);
 }
 
 /* General function for posting json to database

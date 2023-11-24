@@ -48,8 +48,9 @@ const windowLocation = window.location.href;
 const windowId = windowLocation.split('?').pop();
 console.log(windowId);
 
-addEventListener('DOMContentLoaded', async() => {
-    const json = await restfulJsonGet(getPaths.postDetails);
+addEventListener('DOMContentLoaded', async () => {
+    const json = await restfulJsonGet(getPaths.postDetails+'/'+windowId);
+    console.log(json)
     if (json != null) {
         loadDetails(json);
         loadComments(json.comment);
