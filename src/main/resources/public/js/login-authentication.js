@@ -23,21 +23,15 @@ import htmlPages from "../modules/htmlPaths.js"
 
 const nextPageHtml = htmlPages.homepage;
 const form = document.getElementById('loginForm');
-const usernameElement = document.getElementById('email');
-const passwordElement = document.getElementById('password');
-
-if (form || usernameElement || passwordElement == null) {
-    console.error("One of the static essential components missing!")
-}
-
 
 form.addEventListener('submit', (e) => {
     e.preventDefault(); // Prevent default form submission
     
 
-    const usernameInput = usernameElement.value;
-    const passwordInput = passwordElement.value;
+    const usernameInput =  document.getElementById('email').value;
+    const passwordInput = document.getElementById('password').value;
     if (usernameInput.trim() !== '' || passwordInput.trim() !== ''){
+		console.log("senha = " + passwordInput + "email = " + usernameInput);
         sendAuth(usernameInput, passwordInput);
     } 
 })
@@ -58,36 +52,29 @@ function sendAuth(usernameInput, passwordInput) {
         password: passwordInput
     };
 
-    console.log("data sent to server:" + JSON.stringify(serverRequestData));
-
     fetch('/auth', {
         method: "POST",
         body: JSON.stringify(serverRequestData),
-        headers: {
-            //specify its a json being sent
-            "Content-Type": "application/json"
+        headers: { "Content-Type": "application/json" }
+    })
+    .then(response => {
+        if (response.status === 401) {
+            alert("Nome de usuário ou senha incorretos");
+            return null;
+        } else if (!response.ok) {
+            throw new Error('Falha na requisição da API com status ' + response.status);
+        }
+        return response.json();
+    })
+    .then(json => {
+        if (json) {
+            console.log('Autenticação bem-sucedida: ' + JSON.stringify(json));
+            storeNewUserData(json.userName, json.userId);
+            window.location.href = nextPageHtml;
         }
     })
-        .then(response => {
-            if (response.status == 401) { //expected unauthorized response
-                alert("Incorrect user or password");
-                return;
-            } else if (!response.ok) { //unexpected error responses, incluiding couldnt reach server
-                throw new Error('API request failed with status ' + response.status);
-            }
-            return response.json();
-        })
-        .then(json => {
-			console.log ('Token: ' + JSON.stringify(json, null, 2));
-            storeNewToken(json)
-            
-            //the token was supposed to be encrypted and thus this is not the ideal code
-            storeNewUserData(json.payload.name, json.payload.sub);
-            window.location.href = nextPageHtml;
-        })
-        .catch(error => {
-			console.log(error);
-        })
+    .catch(error => console.log(error));
 }
+
 
 

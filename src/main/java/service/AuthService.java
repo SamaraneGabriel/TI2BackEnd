@@ -14,7 +14,7 @@ import spark.Response;
 //to display warning messages on log
 import java.util.logging.Logger;
 import java.util.logging.Level;
-
+import app.Criptografia;
 
 public class AuthService extends ServiceParent{
 	
@@ -52,55 +52,32 @@ public class AuthService extends ServiceParent{
 	/* Sends response a very specific JWT model
 	 * See model example on auth-user module at front-end server
 	 */
-	public static Object auth(Request req, Response res) throws Exception{
-		final String reqJsonBody = req.body();
-		JSONObject reqJson = parseBody(reqJsonBody);
+	public static Object auth(Request req, Response res) throws Exception {
+	    String reqJsonBody = req.body();
+	    JSONObject reqJson = parseBody(reqJsonBody);
 
-    	String email = (String) reqJson.get("username");
-    	String password = (String) reqJson.get("password");
-    	System.out.println("Got [email=(" +email+ "), password=(" +password+ ")] from request body");
-    	
-    	
-    	
-    	res.type("application/json");
-    	JSONObject json;
-    	if (UsuarioDAO.autenticaUsuario(email, password)) {
-    		res.status(200);
-    		Usuario usuario = UsuarioDAO.getUsuarioByEmail(email);
-    		json = buildAuthResponse(usuario);
-    		
-    	} else {
-    		res.status(401); //Unauthorized
+	    String email = (String) reqJson.get("username");
+	    String password = (String) reqJson.get("password");
 
-    		//Add error message
-    		json = new JSONObject();
-			json.put("error", "Authentication failed");
-		}
-    	
-    	return json;
-	}
-	
-	
-	@SuppressWarnings("unchecked")
-	private static JSONObject buildAuthResponse(Usuario usuario) {
-		JSONObject responseJson = new JSONObject();
-		
-		JSONObject header = new JSONObject();
-	        header.put("alg", "HS256");
-	        header.put("typ", "JWT");
-        JSONObject payload = new JSONObject();
-	        payload.put("sub", usuario.getId()); 
-	        payload.put("name", usuario.getNome());
-	        payload.put("iat", null);//iat not implemented
-	    //signature not implemented
-	        
-	        
-	    responseJson.put("header", header);
-	    responseJson.put("payload", payload);
-	    responseJson.put("signature", null); // Signature (set to null for now)
+	    res.type("application/json");
+	    JSONObject json = new JSONObject();
 	    
-	    return responseJson;
+	    if (UsuarioDAO.autenticaUsuario(email, Criptografia.hashMD5(password))) {
+	        res.status(200);
+	        Usuario usuario = UsuarioDAO.getUsuarioByEmail(email);
+	        json.put("message", "Autenticação bem-sucedida");
+	        json.put("userId", usuario.getId());
+	        json.put("userName", usuario.getNome());
+	        System.out.println("ID: " + usuario.getId());
+	        System.out.println("USERNAME: " + usuario.getUsername());
+	    } else {
+	        res.status(401); // Unauthorized
+	        json.put("error", "Falha na autenticação");
+	    }
+	    
+	    return json;
 	}
+
 	
 	@SuppressWarnings("unused")
 	public static Object buscaUsuarioPorId(Request req, Response res) throws Exception {
@@ -124,4 +101,69 @@ public class AuthService extends ServiceParent{
 	    }
 	}
 
+	public static boolean updateNome(Request req, Response res){
+		final String reqJsonBody = req.body();
+		JSONObject reqJson;
+		boolean status = false;
+		try {
+			reqJson = parseBody(reqJsonBody);
+			String id = (String) reqJson.get("id");
+	        String username = (String) reqJson.get("username");
+	        
+	        System.out.println("id: " + id);
+	        System.out.println("Nome: " + username);
+	        if(UsuarioDAO.updateUsername(username, Integer.parseInt(id))) {
+	        	status = true;
+	        }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return status;
+		
+       
+	}
+	
+	public static boolean updateEmail(Request req, Response res){
+		final String reqJsonBody = req.body();
+		JSONObject reqJson;
+		boolean status = false;
+		try {
+			reqJson = parseBody(reqJsonBody);
+			String id = (String) reqJson.get("id");
+	        String email = (String) reqJson.get("email");
+	        
+	        if(UsuarioDAO.updateEmail(email, Integer.parseInt(id))) {
+	        	status = true;
+	        }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return status;
+		
+       
+	}
+	
+	public static boolean updateSenha(Request req, Response res){
+		final String reqJsonBody = req.body();
+		JSONObject reqJson;
+		boolean status = false;
+		try {
+			reqJson = parseBody(reqJsonBody);
+			String id = (String) reqJson.get("id");
+	        String senha = (String) reqJson.get("senha");
+	        
+	        if(UsuarioDAO.updateSenha(senha, Integer.parseInt(id))) {
+	        	status = true;
+	        }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return status;
+		
+       
+	}
+	
 }
