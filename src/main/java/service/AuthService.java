@@ -90,6 +90,7 @@ public class AuthService extends ServiceParent{
 	        JSONObject json = new JSONObject();
 	        
 	        json.put("username", usuario.getUsername());
+	        json.put("nome", usuario.getNome());
 	        json.put("email", usuario.getEmail());
 	        json.put("acertos", usuario.getQtdAcertos());
 	        json.put("feitos", usuario.getQtdFeitos());

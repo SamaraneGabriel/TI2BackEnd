@@ -10,7 +10,7 @@ async function loadUserProfile(data) {
         try {
             const json = await getUserById(id);
             if (json) {
-                document.getElementById("username-display").textContent = json.email;
+                document.getElementById("username-display").textContent = json.nome;
                 document.getElementById("email-display").textContent = json.username;
                 document.getElementById("total-exercicios").textContent = json.feitos;
                 document.getElementById("total-acertos").textContent = json.acertos;
