@@ -1,6 +1,8 @@
 package service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -10,8 +12,10 @@ import org.json.simple.JSONObject;
 
 import dao.PerguntaDAO;
 import dao.RespostaDAO;
+import dao.UsuarioDAO;
 import model.Pergunta;
 import model.Resposta;
+import model.Usuario;
 import spark.Request;
 import spark.Response;
 
@@ -33,15 +37,17 @@ public class PostService extends ServiceParent{
 		//Get id from url sent -> need to review the formats later
     	int id = 0; 
     	try {
-    		id = Integer.parseInt(req.queryParams("id"));
+    		id = Integer.parseInt(req.params("id"));
     	} catch (NumberFormatException e) {
     		throw new Exception ("Failure to parse to int from url id");
     	}
     	
     	Pergunta pergunta = PerguntaDAO.getPerguntaById(id);
+    	Usuario usuario = UsuarioDAO.getUsuarioById(pergunta.getUsuarioId());
+    	
     	List<Resposta> respostas = PerguntaDAO.getRespostasFromId(id);
     	int cLen = (respostas.size() > maxCommentsNum) ? maxCommentsNum : respostas.size();
-    	
+    	System.out.println("respostas len = " + respostas.size());
     	
     	//Build response
     	res.type("application/json");
@@ -50,42 +56,49 @@ public class PostService extends ServiceParent{
     	List<String> tags = Arrays.asList("adhd");
     	JSONArray postContentTags = new JSONArray(); 
     	for (String tag : tags) {
-    	    postContentTags.add(tag);
+    		JSONObject tagJson = new JSONObject();
+    		tagJson.put("name", tag);
+    		tagJson.put("color", "red");
+    		postContentTags.add(tagJson);
     	}
 
 		
-		//-----JSON Overall Structure-----------------
-		
+
 		JSONObject responseJson = new JSONObject();
-			JSONObject jsonPost = new JSONObject();
-				JSONObject jsonPostUser = new JSONObject();
-					//jsonPostUser.put("name", pergunta.getNome_usuario()); -> find another way to get name from pergunta
-					jsonPostUser.put("date", (pergunta.getData_postagem()).toString());
-				JSONObject jsonPostContent = new JSONObject(); 
-					jsonPostContent.put("title", pergunta.getTitulo());
-					jsonPostContent.put("text", pergunta.getConteudo());
-					jsonPostContent.put("likes", random.nextInt(30));
-					jsonPostContent.put("comments", random.nextInt(30));
-					jsonPostContent.put("tags", postContentTags);
-					//jsonPostContent.put("id", pergunta.getId_pergunta());
-				
-				jsonPost.put("user", jsonPostUser);	
-				jsonPost.put("content", jsonPostContent);
+		JSONObject jsonPostUser = new JSONObject();
+		jsonPostUser.put("username", usuario.getNome()); 
 			
-			JSONArray jsonArrayComments = new JSONArray();
+		JSONObject jsonPostContent = new JSONObject(); 
+		jsonPostContent.put("title", pergunta.getTitulo());
+		jsonPostContent.put("text", pergunta.getConteudo());
+		jsonPostContent.put("likes", random.nextInt(30));
+		jsonPostContent.put("comments", random.nextInt(30));
+		jsonPostContent.put("tags", postContentTags);
+		jsonPostContent.put("date", (pergunta.getData_postagem()).toString());
+		jsonPostContent.put("id", pergunta.getId_pergunta());
 			
+		responseJson.put("user", jsonPostUser);	
+		responseJson.put("content", jsonPostContent);
+		
+		JSONArray jsonArrayComments = new JSONArray();
 			
-		//----------------------------------------
+		
+		
 			
 		for (Resposta resposta : respostas) {
-	        	JSONObject jsonComment = new JSONObject();
-	        	JSONObject jsonCommentUser = new JSONObject();
-		        	jsonCommentUser.put("name", resposta.getNome_usuario());
-		        	jsonCommentUser.put("date", dateFormatter.format(resposta.getData_postagem().toLocalDate()));
-	        	JSONObject jsonCommentContent = new JSONObject(); 
-		        	jsonCommentContent.put("text", resposta.getConteudo());
-		        	jsonCommentContent.put("likes", random.nextInt(30));
-		        	//jsonCommentContent.put("id", respostas[i].getId_resposta());
+			Usuario usuarioComment = UsuarioDAO.getUsuarioById(resposta.getId_usuario());
+			System.out.println(usuarioComment.getNome());
+			
+        	JSONObject jsonComment = new JSONObject();
+        	JSONObject jsonCommentUser = new JSONObject();
+        	jsonCommentUser.put("username", usuarioComment.getNome());
+	        	
+        	JSONObject jsonCommentContent = new JSONObject(); 
+        	jsonCommentContent.put("text", resposta.getConteudo());
+        	jsonCommentContent.put("likes", random.nextInt(30));
+        	jsonCommentContent.put("date", dateFormatter.format(resposta.getData_postagem().toLocalDate()));
+        	jsonCommentContent.put("id", resposta.getId_resposta());
+        	
         	
         	jsonComment.put("user", jsonCommentUser);
         	jsonComment.put("content", jsonCommentContent);
@@ -94,9 +107,9 @@ public class PostService extends ServiceParent{
 
         
         ///FINISH responseJson
-        responseJson.put("post", jsonPost);
         responseJson.put("comment", jsonArrayComments); 
         
+        System.out.println(responseJson.toJSONString());
         return responseJson.toJSONString();
 	}
 	
@@ -134,22 +147,30 @@ public class PostService extends ServiceParent{
 		final String reqJsonBody = req.body();
 		JSONObject reqJson = parseBody(reqJsonBody);
 
-		String dateString = (String) reqJson.get("time");
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date parsedDate = dateFormat.parse(dateString);
-        java.sql.Date date = new java.sql.Date(parsedDate.getTime());
+
+
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDateTime.format(formatter);
+        
+        java.sql.Date sqlDate = java.sql.Date.valueOf(formattedDate);
+        java.util.Date date = java.util.Date.from(currentDateTime.atZone(ZoneId.systemDefault()).toInstant());
+        
 		
 		String content = (String) reqJson.get("content");
-		String email = (String) reqJson.get("sub");
-		String questionId = (String) reqJson.get("id");
+		String strUserId = (String) reqJson.get("userId");
+		String strQuestionId = (String) reqJson.get("questionId");
+		int userId = Integer.parseInt(strUserId);
+		int questionId = Integer.parseInt(strQuestionId);
+
 		
-		int id = Integer.parseInt(questionId);
 		
-		System.out.println(String.format("Got values [content=(%s), email=(%s), question_id=(%s)]",
-				content, email, questionId));
+		System.out.println(String.format("Got values [content=(%s), user_id=(%s), question_id=(%d), date=(%s)]",
+				content, userId, questionId, sqlDate.toString()));
 	
 		
-		RespostaDAO.inserirResposta(content, email, id, date);
+
+		RespostaDAO.inserirResposta(content, userId, questionId, sqlDate);
 		
 		
 		boolean sucess = false;

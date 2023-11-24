@@ -1,12 +1,15 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import dao.PerguntaDAO;
+import dao.UsuarioDAO;
 import model.Pergunta;
+import model.Usuario;
 import spark.Request;
 import spark.Response;
 
@@ -24,7 +27,14 @@ public class ForumService extends ServiceParent{
     	final int postsMaxLen = 5;
     	
     	List<Pergunta> perguntas = PerguntaDAO.getMostRecent(5);
-		int postsLen = (perguntas.size() > postsMaxLen) ? postsMaxLen : perguntas.size();
+    	List<Usuario> usuarios = new ArrayList<>();
+    	
+    	for (Pergunta pergunta : perguntas) {
+    		usuarios.add(UsuarioDAO.getUsuarioById(pergunta.getUsuarioId()));
+    		System.out.println(pergunta.getUsuarioId());
+    	}
+    	
+        int postsLen = Math.min(postsMaxLen, perguntas.size());
 		
 		if (postsLen == 0) {
 			res.status(400);
@@ -41,21 +51,28 @@ public class ForumService extends ServiceParent{
 		
         for (int i = 0; i < postsLen; i++) {
         	JSONArray tagsArray = new JSONArray();
-        	for (String s : defaultTags) {
-        		tagsArray.add(s);
+        
+        	
+        	for (String tag : defaultTags) {
+        		JSONObject tagJson = new JSONObject();
+        		tagJson.put("name", tag);
+        		tagJson.put("color", "red");
+        		tagsArray.add(tagJson);
         	}
    
         	JSONObject json = new JSONObject(); //Contains user and content JSONObject
-        		JSONObject userJson = new JSONObject();
-        			//userJson.put("name", perguntas.get(i).getNome_usuario());  -> create method list user from list questao          
-        			userJson.put("date", (perguntas.get(i).getData_postagem()).toString()); 
-	        	JSONObject contentJson = new JSONObject();
-		        	contentJson.put("title", perguntas.get(i).getTitulo());
-		        	contentJson.put("text", perguntas.get(i).getConteudo());
-		        	contentJson.put("likes", random.nextInt(30)); //nao possui
-		        	contentJson.put("comments", random.nextInt(30));
-		        	contentJson.put("tags", tagsArray);
-		        	contentJson.put("id", perguntas.get(i).getId_pergunta());
+        	JSONObject userJson = new JSONObject();
+        	userJson.put("name", usuarios.get(i).getNome());       
+	        	
+        	JSONObject contentJson = new JSONObject();
+        	contentJson.put("title", perguntas.get(i).getTitulo());
+        	contentJson.put("text", perguntas.get(i).getConteudo());
+        	contentJson.put("likes", random.nextInt(30)); //nao possui
+        	contentJson.put("comments", random.nextInt(30));
+        	contentJson.put("tags", tagsArray);
+        	contentJson.put("id", perguntas.get(i).getId_pergunta());
+        	contentJson.put("date", (perguntas.get(i).getData_postagem()).toString()); 
+        	
         	//finish the json
         	json.put("user", userJson);
         	json.put("content", contentJson);

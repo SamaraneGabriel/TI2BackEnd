@@ -66,10 +66,10 @@ public class App extends dao.DAO{
 	        });
 	        
 	        
-	        Spark.get("/forum/page/explore", (req,res) -> {//Missing Database Integration
+	        Spark.get("/forum/post/load/:id", (req,res) -> {//Missing Database Integration
 	        	return PostService.getForumPagePost(req, res);
 	        });
-	        Spark.put("/forum/page/comment", (req, res) -> {
+	        Spark.post("/forum/post/comment", (req, res) -> {
 	        	return PostService.putForumPageComment(req, res);
 	        });
 	        

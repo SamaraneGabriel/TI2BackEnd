@@ -31,13 +31,16 @@ async function sendComment(commentInput) {
         questionId: windowId
     };
     console.log(serverRequestData)
+
     const success = await restfulJsonPost(postPaths.forumComment, serverRequestData)
+    console.log(success)
+    
     if (!success){
         alert('Server couldnt send reponse. Try again later');
         commentBox.value = '';
     } else {
         //reload page
-        window.location.href = window.location.href;
+        location.reload();
     }
 
 }

@@ -49,8 +49,8 @@ export async function doubleRestfulJsonGet (path, id1, id2) {
  * @param: reqJson, required json to send the infromation
  * @return: boolean, true on success
  */
-export function restfulJsonPost (path, reqJson) {
-    fetch (path, {
+export async function restfulJsonPost (path, reqJson) {
+    return fetch (path, {
         method: 'POST',
         body: JSON.stringify(reqJson),
         headers: {
@@ -59,11 +59,12 @@ export function restfulJsonPost (path, reqJson) {
     })
     .then (response => {
         //used when json values where not found
-        if (response == 400)  console.warn('Failure receive from server -> data invalid or not found for \n' + reqJson);
-        else if (!response.ok) console.error('API failed with status ' + response.status);
-        else return true;
-
-        return false;
+        if (!response.ok) {
+            console.error('API failed with status ' + response.status);
+            return false;
+        }
+        
+        return true;
     })
 }
 

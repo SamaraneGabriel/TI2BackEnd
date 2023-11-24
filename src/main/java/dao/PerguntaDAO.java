@@ -92,12 +92,11 @@ public class PerguntaDAO extends DAO {
     // List of resposta (comments) from the pergunta id
     public static List<Resposta> getRespostasFromId(int id) {
         List<Resposta> respostas = new ArrayList<>();
-        String sql = """
-        		SELECT resposta.*, usuario.username AS nome
-                FROM bancoti2.resposta
-                JOIN bancoti2.usuario ON resposta.usuario_id = usuario.id
-                WHERE resposta.pergunta_id = ?
-                ORDER BY resposta.data_postagem ASC""";
+        String sql = "SELECT resposta.*, usuario.username AS nome" +
+                " FROM bancoti2.resposta" +
+                " JOIN bancoti2.usuario ON resposta.usuario_id = usuario.id" +
+                " WHERE resposta.pergunta_id = ?"+
+                " ORDER BY resposta.data_postagem ASC";
 
         
         try (PreparedStatement pstmt = conexao.prepareStatement(sql)) {
@@ -110,7 +109,7 @@ public class PerguntaDAO extends DAO {
                 resposta.setConteudo(rs.getString("conteudo"));
                 resposta.setData_postagem(rs.getDate("data_postagem"));
                 resposta.setId_usuario(rs.getInt("usuario_id"));
-                resposta.setNome_usuario(rs.getString("nome_usuario")); // Aqui você seta o nome do usuário
+                //resposta.setNome_usuario(rs.getString("nome_usuario")); // Aqui você seta o nome do usuário
                 respostas.add(resposta);
             }
         
@@ -127,11 +126,10 @@ public class PerguntaDAO extends DAO {
     //List of Perguntas with its max length as parameter
     public static List<Pergunta> getMostRecent(int limit) {
         List<Pergunta> perguntas = new ArrayList<>();
-        String sql = """
-        		SELECT pergunta.*, usuario.username AS nome
-                FROM bancoti2.pergunta
-                JOIN bancoti2.usuario ON pergunta.usuario_id = usuario.id
-                ORDER BY pergunta.data_postagem DESC LIMIT """ + " " + limit;
+        String sql = "SELECT pergunta.*, usuario.username AS nome" +
+                " FROM bancoti2.pergunta" +
+                " JOIN bancoti2.usuario ON pergunta.usuario_id = usuario.id" +
+                " ORDER BY pergunta.data_postagem DESC LIMIT " + limit;
 
 
         try (PreparedStatement pstmt = conexao.prepareStatement(sql)) {

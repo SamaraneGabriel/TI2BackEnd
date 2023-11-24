@@ -21,8 +21,8 @@ public class RespostaDAO extends DAO{
 	 * Attempts to insert data with limited information obtained
 	 * !(Doesnt the webpage give the id now?)!
 	 */
-    public static void inserirResposta(String conteudo, String email, int perguntaId, Date data) {
-        Usuario usuario = UsuarioDAO.getUsuarioByEmail(email);
+    public static void inserirResposta(String conteudo, int userId, int perguntaId, Date data) {
+        Usuario usuario = UsuarioDAO.getUsuarioById(userId);
         
         if (usuario != null){
         	int usuarioId = usuario.getId();
