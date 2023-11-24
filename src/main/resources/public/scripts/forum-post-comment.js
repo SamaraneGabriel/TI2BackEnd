@@ -21,13 +21,14 @@ commentForm.addEventListener('submit', (e) => {
     }
 })
 
-function sendComment(commentInput) {
+async function sendComment(commentInput) {
     const serverRequestData = {
         username: username,
         content: commentInput
     };
 
-    if (!restfulJsonPost(postPaths.forumComment, serverRequestData)){
+    const success = await restfulJsonPost(postPaths.forumComment, serverRequestData)
+    if (!success){
         alert('Server couldnt send reponse. Try again later');
         commentBox.value = '';
     } else {

@@ -43,9 +43,9 @@ import { getPaths, restfulJsonGet } from "../modules/bancoti2-fetch.js";
 const postsPreviewContainer = document.getElementById("posts-section");
 
 
-addEventListener('DOMContentLoaded', () => {
-    const serverJson = restfulJsonGet(getPaths.forumExplore);
-
+addEventListener('DOMContentLoaded', async () => {
+    const serverJson = await restfulJsonGet(getPaths.forumExplore);
+    console.log(serverJson)
     if (serverJson != null) updateForum(serverJson);
     else {
         alert('Using mock data');
@@ -79,6 +79,7 @@ function updateForum(postsArray) {
 
         //parse module string as usable document element
         const htmlString = getForumPostPreview(username, date, title, tagsArray, text, likes, comments);
+        console.log(htmlString)
         const newDiv = document.createElement('div');
         newDiv.innerHTML = htmlString;
 
