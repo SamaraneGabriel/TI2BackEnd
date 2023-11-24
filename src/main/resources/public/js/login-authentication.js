@@ -48,7 +48,7 @@ form.addEventListener('submit', (e) => {
  */
 function sendAuth(usernameInput, passwordInput) {
     const serverRequestData = {
-        username: usernameInput,
+        email: usernameInput,
         password: passwordInput
     };
 
@@ -58,22 +58,34 @@ function sendAuth(usernameInput, passwordInput) {
         headers: { "Content-Type": "application/json" }
     })
     .then(response => {
-        if (response.status === 401) {
-            alert("Nome de usuário ou senha incorretos");
-            return null;
-        } else if (!response.ok) {
-            throw new Error('Falha na requisição da API com status ' + response.status);
+        if (response.status === 401) { //expected unauthorized response
+            throw new Error ("Unauthorized");
+
+        } else if (!response.ok) { //unexpected error responses, incluiding couldnt reach server
+            throw new Error('API request failed with status ' + response.status);
         }
         return response.json();
     })
     .then(json => {
+        console.log ('Token: ' + JSON.stringify(json, null, 2));
         if (json) {
             console.log('Autenticação bem-sucedida: ' + JSON.stringify(json));
             storeNewUserData(json.userName, json.userId);
+            storeNewToken(json)
             window.location.href = nextPageHtml;
         }
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+        console.error(error);
+        if (error.message === 'Unauthorized'){
+            alert('Incorrect user or password');
+        } else {
+            alert('couldnt reach server. Using test user');
+            storeDefaultToken();
+            storeDefaultUserData();
+            window.location.href = nextPageHtml;
+        }
+    })
 }
 
 

@@ -1,16 +1,19 @@
 /* Script used to send comments on the forum-post page
  */
 
-import { getName } from "../modules/user-data.js";
+import { getId } from "../modules/user-data.js";
 import { restfulJsonPost, postPaths } from "../modules/bancoti2-fetch.js";
 
-const username = getName();
+const userId = getId();
 const commentForm = document.getElementById('comment-form');
 const commentBox = document.getElementById('comment-box');
+const windowLocation = window.location.href;
+const windowId = windowLocation.split('?').pop();
+
 commentForm.addEventListener('submit', (e) => {
     e.preventDefault(); // Prevent default form submission
 
-    if (username == null) { 
+    if (userId == null) { 
         alert("Cannot comment as you are not logged in");
         return;
     }
@@ -23,17 +26,21 @@ commentForm.addEventListener('submit', (e) => {
 
 async function sendComment(commentInput) {
     const serverRequestData = {
-        username: username,
-        content: commentInput
+        userId: userId,
+        content: commentInput,
+        questionId: windowId
     };
+    console.log(serverRequestData)
 
     const success = await restfulJsonPost(postPaths.forumComment, serverRequestData)
+    console.log(success)
+    
     if (!success){
         alert('Server couldnt send reponse. Try again later');
         commentBox.value = '';
     } else {
         //reload page
-        window.location.href = window.location.href;
+        location.reload();
     }
 
 }

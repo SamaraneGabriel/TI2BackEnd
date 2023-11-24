@@ -79,7 +79,7 @@ public class AuthService extends ServiceParent{
 	}
 
 	
-	@SuppressWarnings("unused")
+	@SuppressWarnings("unchecked")
 	public static Object buscaUsuarioPorId(Request req, Response res) throws Exception {
 	    String id = req.queryParams("id");
 	    int idNum = Integer.parseInt(id);

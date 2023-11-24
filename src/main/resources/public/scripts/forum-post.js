@@ -108,6 +108,7 @@ function loadComments(commentsArray) {
 
         const jsonContent = json.content;
         const date = jsonContent.date;
+        console.log(jsonContent)
         const text = jsonContent.text;
         const likes = jsonContent.likes;
         const id = jsonContent.id;       
