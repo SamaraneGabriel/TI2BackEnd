@@ -6,7 +6,7 @@ import { restfulJsonGet } from "./bancoti2-fetch.js";
 
 const defaultJson = {
     name: 'nome',
-    id: 'id' //used as identifier
+    id: 0 //used as identifier
 }
 const lsPath = 'userData';
 

@@ -61,7 +61,7 @@ form.addEventListener('submit', (e) => {
  */
 function sendAuth(usernameInput, passwordInput) {
     const serverRequestData = {
-        username: usernameInput,
+        email: usernameInput,
         password: passwordInput
     };
 
@@ -77,8 +77,8 @@ function sendAuth(usernameInput, passwordInput) {
     })
         .then(response => {
             if (response.status == 401) { //expected unauthorized response
-                alert("Incorrect user or password");
-                return;
+                throw new Error ("Unauthorized");
+
             } else if (!response.ok) { //unexpected error responses, incluiding couldnt reach server
                 throw new Error('API request failed with status ' + response.status);
             }
@@ -93,11 +93,15 @@ function sendAuth(usernameInput, passwordInput) {
             window.location.href = nextPageHtml;
         })
         .catch(error => {
-            console.error('loginAuth.js error: ', error + '\n' + 'using test user values for now');
-            alert('couldnt reach server. Using test user');
-            storeDefaultToken();
-            storeDefaultUserData();
-            window.location.href = nextPageHtml;
+            console.error(error);
+            if (error.message === 'Unauthorized'){
+                alert('Incorrect user or password');
+            } else {
+                alert('couldnt reach server. Using test user');
+                storeDefaultToken();
+                storeDefaultUserData();
+                window.location.href = nextPageHtml;
+            }
         })
 }
 
